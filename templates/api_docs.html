@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block title %}S3 API Documentation &mdash; MengDrive Dispatch{% endblock %}
+
+{% block content %}
+<div class="space-y-12">
+    <!-- Header Section -->
+    <div class="border-4 border-ink p-6 sm:p-8 bg-paper shadow-hard space-y-3">
+        <div class="flex items-center justify-between border-b border-ink pb-2">
+            <span class="text-xs font-mono font-bold text-editorial-red uppercase tracking-widest">&bull; S3 REST PROTOCOL MANUAL</span>
+            <span class="text-[10px] font-mono text-neutral-500">VERSION 1.0 COMPLIANT</span>
+        </div>
+        <h1 class="font-serif font-black text-3xl sm:text-5xl text-ink uppercase tracking-tight">MENGDRIVE S3 API DOCUMENTATION</h1>
+        <p class="text-sm font-body text-neutral-700 max-w-3xl leading-relaxed">
+            This application provides a 100% S3-compatible REST API. You can use standard AWS SDKs (`boto3`, `@aws-sdk/client-s3`), `aws-cli`, `rclone`, or `curl` to manage files.
+        </p>
+    </div>
+
+    <!-- Endpoint Reference Grids -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Bucket API Endpoints -->
+        <div class="border-2 border-ink bg-paper p-6 shadow-hard space-y-4">
+            <div class="border-b-2 border-ink pb-2 flex items-center justify-between">
+                <h3 class="font-serif font-bold text-xl uppercase text-ink">BUCKET OPERATIONS</h3>
+                <span class="text-[11px] font-mono text-neutral-500 font-bold">DIRECTORY API</span>
+            </div>
+
+            <div class="space-y-3 font-mono text-xs">
+                <div class="flex items-center justify-between border border-ink p-3 bg-paper">
+                    <span class="bg-ink text-paper font-bold px-2 py-0.5 text-[10px]">PUT</span>
+                    <span class="text-ink font-bold">/:bucket</span>
+                    <span class="text-neutral-600 font-body text-xs">Create New Bucket</span>
+                </div>
+                <div class="flex items-center justify-between border border-ink p-3 bg-paper">
+                    <span class="bg-editorial-red text-paper font-bold px-2 py-0.5 text-[10px]">GET</span>
+                    <span class="text-ink font-bold">/:bucket</span>
+                    <span class="text-neutral-600 font-body text-xs">List Bucket Files</span>
+                </div>
+                <div class="flex items-center justify-between border border-ink p-3 bg-paper">
+                    <span class="bg-neutral-700 text-paper font-bold px-2 py-0.5 text-[10px]">DELETE</span>
+                    <span class="text-ink font-bold">/:bucket</span>
+                    <span class="text-neutral-600 font-body text-xs">Delete Bucket</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Object API Endpoints -->
+        <div class="border-2 border-ink bg-paper p-6 shadow-hard space-y-4">
+            <div class="border-b-2 border-ink pb-2 flex items-center justify-between">
+                <h3 class="font-serif font-bold text-xl uppercase text-ink">OBJECT FILE OPERATIONS</h3>
+                <span class="text-[11px] font-mono text-neutral-500 font-bold">STORAGE API</span>
+            </div>
+
+            <div class="space-y-3 font-mono text-xs">
+                <div class="flex items-center justify-between border border-ink p-3 bg-paper">
+                    <span class="bg-ink text-paper font-bold px-2 py-0.5 text-[10px]">PUT</span>
+                    <span class="text-ink font-bold">/:bucket/*key</span>
+                    <span class="text-neutral-600 font-body text-xs">Upload File</span>
+                </div>
+                <div class="flex items-center justify-between border border-ink p-3 bg-paper">
+                    <span class="bg-editorial-red text-paper font-bold px-2 py-0.5 text-[10px]">GET</span>
+                    <span class="text-ink font-bold">/:bucket/*key</span>
+                    <span class="text-neutral-600 font-body text-xs">Download File</span>
+                </div>
+                <div class="flex items-center justify-between border border-ink p-3 bg-paper">
+                    <span class="bg-neutral-700 text-paper font-bold px-2 py-0.5 text-[10px]">DELETE</span>
+                    <span class="text-ink font-bold">/:bucket/*key</span>
+                    <span class="text-neutral-600 font-body text-xs">Delete File</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- cURL Command Manual -->
+    <div class="border-4 border-ink p-6 sm:p-8 bg-paper shadow-hard-lg space-y-6">
+        <h3 class="font-serif font-black text-2xl uppercase border-b-2 border-ink pb-2 text-ink">cURL COMMAND EXAMPLES &amp; CODE SNIPPETS</h3>
+
+        <!-- 1. Upload File -->
+        <div class="space-y-2">
+            <div class="flex items-center justify-between">
+                <h4 class="font-mono font-bold text-xs uppercase text-ink">1. Upload File via cURL (Auto-Generate Lowercase Bucket)</h4>
+                <button onclick="copyToClipboard('curl -X PUT http://localhost:3060/my-bucket/gambar.png -H &quot;Content-Type: image/png&quot; --data-binary &quot;@gambar.png&quot;', 'cURL Upload Command')" 
+                        class="text-[11px] font-mono font-bold text-editorial-red hover:underline uppercase">
+                    [COPY CODE]
+                </button>
+            </div>
+            <div class="bg-ink text-paper p-4 font-mono text-xs overflow-x-auto shadow-inner border border-ink">
+                <code>
+                    curl -X PUT http://localhost:3060/my-bucket/gambar.png \<br>
+                    &nbsp;&nbsp;-H "Content-Type: image/png" \<br>
+                    &nbsp;&nbsp;--data-binary "@gambar.png"
+                </code>
+            </div>
+        </div>
+
+        <!-- 2. Download File -->
+        <div class="space-y-2">
+            <div class="flex items-center justify-between">
+                <h4 class="font-mono font-bold text-xs uppercase text-ink">2. Download File via cURL</h4>
+                <button onclick="copyToClipboard('curl -o gambar.png http://localhost:3060/my-bucket/gambar.png', 'cURL Download Command')" 
+                        class="text-[11px] font-mono font-bold text-editorial-red hover:underline uppercase">
+                    [COPY CODE]
+                </button>
+            </div>
+            <div class="bg-ink text-paper p-4 font-mono text-xs overflow-x-auto shadow-inner border border-ink">
+                <code>curl -o gambar.png http://localhost:3060/my-bucket/gambar.png</code>
+            </div>
+        </div>
+
+        <!-- 3. Stream File -->
+        <div class="space-y-2">
+            <div class="flex items-center justify-between">
+                <h4 class="font-mono font-bold text-xs uppercase text-ink">3. Streaming Video / Audio Direct Stream (HTTP 206)</h4>
+                <button onclick="copyToClipboard('http://localhost:3060/ui/buckets/my-bucket/stream/video.mp4', 'Video Stream URL')" 
+                        class="text-[11px] font-mono font-bold text-editorial-red hover:underline uppercase">
+                    [COPY URL]
+                </button>
+            </div>
+            <div class="bg-ink text-paper p-4 font-mono text-xs overflow-x-auto shadow-inner border border-ink">
+                <code>http://localhost:3060/ui/buckets/my-bucket/stream/video.mp4</code>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

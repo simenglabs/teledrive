@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Git pre-push hook — delegates to the real pipeline script.
+set -euo pipefail
+exec bash "$(git rev-parse --show-toplevel)/scripts/pre-push.sh"

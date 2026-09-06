@@ -1,0 +1,23 @@
+# Keep the build context tiny — only templates + prebuilt binary are needed
+.git
+.env
+.env.*
+telegram.session
+*.session
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+local.db*
+mengdrive_spool_*
+test.mp4
+*.mp4
+target/*
+!target/release/s3-telegram
+docs/
+README.md
+Makefile
+docker-compose.yml
+.dockerignore
+Dockerfile
+.gitignore

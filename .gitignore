@@ -1,0 +1,35 @@
+# Rust
+/target
+**/*.rs.bk
+
+# Environment & secrets — NEVER commit
+.env
+.env.local
+.env.*.local
+
+# Telegram MTProto session (auth key — grants full account access)
+telegram.session
+*.session
+
+# Local databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+local.db*
+
+# Upload spool temp files
+mengdrive_spool_*
+
+# Media test files
+test.mp4
+*.mp4
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Docker
+.docker/

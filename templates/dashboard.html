@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard Overview &mdash; MengDrive Dispatch{% endblock %}
+
+{% block content %}
+<div class="space-y-10">
+    <!-- Header Dispatch Banner -->
+    <div class="border-4 border-ink p-6 sm:p-8 bg-paper shadow-hard space-y-3 relative">
+        <div class="flex items-center justify-between border-b border-ink pb-2">
+            <div class="flex items-center space-x-2 text-xs font-mono font-bold uppercase tracking-widest text-neutral-500">
+                <span class="text-editorial-red font-extrabold">&bull; SECTION A</span>
+                <span>STORAGE OVERVIEW &amp; BUCKETS</span>
+            </div>
+            <div class="bg-ink text-paper text-[10px] font-mono font-bold px-2.5 py-1 uppercase">
+                TELEGRAM MTPROTO READY
+            </div>
+        </div>
+
+        <h1 class="font-serif font-black text-3xl sm:text-5xl text-ink uppercase tracking-tight">
+            STORAGE DISPATCH OVERVIEW
+        </h1>
+        <p class="text-sm font-body text-neutral-700 max-w-2xl leading-relaxed">
+            Manage your S3 buckets, automatically encrypt files with AES-256 GCM, and store objects directly in your Telegram Saved Messages.
+        </p>
+    </div>
+
+    <!-- Stats Row (3 Collapsed Grid Cells) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-ink shadow-hard">
+        <!-- Total Buckets -->
+        <div class="border-r border-b border-ink p-6 bg-paper hover:bg-neutral-100 transition-colors space-y-2">
+            <div class="text-xs font-mono font-bold uppercase tracking-widest text-neutral-500">TOTAL S3 BUCKETS</div>
+            <div class="font-serif font-black text-4xl sm:text-5xl text-ink">{{ buckets | length }}</div>
+            <div class="text-[11px] font-mono text-neutral-500">AUTOMATIC LOWERCASE RESOLUTION</div>
+        </div>
+
+        <!-- Total Files -->
+        <div class="border-r border-b border-ink p-6 bg-paper hover:bg-neutral-100 transition-colors space-y-2">
+            <div class="text-xs font-mono font-bold uppercase tracking-widest text-neutral-500">TOTAL STORED FILES</div>
+            <div class="font-serif font-black text-4xl sm:text-5xl text-ink">{{ total_files }}</div>
+            <div class="text-[11px] font-mono text-neutral-500">ENCRYPTED CHUNK OBJECTS</div>
+        </div>
+
+        <!-- Total Storage Used -->
+        <div class="border-r border-b border-ink p-6 bg-paper hover:bg-neutral-100 transition-colors space-y-2">
+            <div class="text-xs font-mono font-bold uppercase tracking-widest text-editorial-red">TOTAL CAPACITY USED</div>
+            <div class="font-mono font-bold text-3xl sm:text-4xl text-ink">{{ total_size_formatted }}</div>
+            <div class="text-[11px] font-mono text-neutral-500">UNLIMITED TELEGRAM CLOUD CAPACITY</div>
+        </div>
+    </div>
+
+    <!-- Bucket Creation Bar -->
+    <div class="border-2 border-ink p-6 bg-paper shadow-hard space-y-4">
+        <div class="flex items-center justify-between border-b border-ink pb-2">
+            <h3 class="font-serif font-bold text-xl uppercase text-ink">CREATE NEW S3 BUCKET</h3>
+            <span class="text-[11px] font-mono text-neutral-500">AUTO-LOWERCASE FORMAT</span>
+        </div>
+
+        <form hx-post="/ui/buckets" hx-target="#bucket-list" hx-swap="outerHTML" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div class="flex-1">
+                <input type="text" 
+                       name="name" 
+                       placeholder="new-bucket-name..." 
+                       required 
+                       class="w-full px-4 py-3 bg-transparent border-b-2 border-ink text-ink font-mono text-sm placeholder:text-neutral-400 focus:outline-none focus:bg-neutral-100 transition">
+            </div>
+            <button type="submit" class="bg-ink text-paper hover:bg-editorial-red border border-ink font-sans font-bold px-8 py-3.5 text-xs uppercase tracking-widest transition-all duration-200 shadow-hard flex items-center justify-center space-x-2">
+                <i data-lucide="plus" class="w-4 h-4 stroke-2"></i>
+                <span>CREATE BUCKET</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Bucket Grid Container -->
+    <div id="bucket-list">
+        {% include "components/bucket_list.html" %}
+    </div>
+</div>
+{% endblock %}
+

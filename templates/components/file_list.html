@@ -1,0 +1,72 @@
+<div id="file-list" class="border-2 border-ink bg-paper shadow-hard overflow-hidden">
+    {% if error %}
+    <div class="bg-editorial-red text-paper p-4 border-b-2 border-ink text-xs font-mono font-bold uppercase flex items-center space-x-2">
+        <i data-lucide="alert-circle" class="w-4 h-4 stroke-2 flex-shrink-0"></i>
+        <span>ERROR UPLOAD DISPATCH: {{ error }}</span>
+    </div>
+    {% endif %}
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs font-mono text-ink border-collapse">
+            <thead class="bg-ink text-paper uppercase text-[11px] font-bold tracking-widest border-b-2 border-ink">
+                <tr>
+                    <th class="px-5 py-3.5 border-r border-paper/20">FILE NAME / KEY</th>
+                    <th class="px-5 py-3.5 border-r border-paper/20">SIZE</th>
+                    <th class="px-5 py-3.5 border-r border-paper/20">MIME TYPE</th>
+                    <th class="px-5 py-3.5 border-r border-paper/20">DISPATCH DATE</th>
+                    <th class="px-5 py-3.5 text-right">ACTION</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-ink">
+                {% for obj in objects %}
+                <tr class="hover:bg-neutral-100 transition-colors">
+                    <td class="px-5 py-4 font-bold border-r border-ink flex items-center space-x-3">
+                        <span class="w-2 h-2 bg-editorial-red"></span>
+                        <span title="{{ obj.key }}" class="truncate max-w-xs font-mono text-xs text-ink">{{ obj.key | truncate_filename }}</span>
+                    </td>
+                    <td class="px-5 py-4 text-ink font-bold border-r border-ink">
+                        {{ obj.size | format_bytes }}
+                    </td>
+                    <td class="px-5 py-4 text-neutral-600 border-r border-ink uppercase">
+                        {{ obj.content_type }}
+                    </td>
+                    <td class="px-5 py-4 text-neutral-600 text-[11px] border-r border-ink">
+                        {{ obj.created_at }}
+                    </td>
+                    <td class="px-5 py-4 text-right space-x-2 font-sans font-bold text-[11px] uppercase tracking-wider">
+                        <button onclick="playVideo('/ui/buckets/{{ bucket_name }}/stream/{{ obj.key }}', '{{ obj.key | truncate_filename }}')" 
+                                class="border border-ink bg-paper hover:bg-ink hover:text-paper px-3 py-1.5 transition-colors">
+                            <span>STREAM</span>
+                        </button>
+
+                        <a href="/ui/buckets/{{ bucket_name }}/download/{{ obj.key }}" 
+                           target="_blank" 
+                           class="border border-ink bg-ink text-paper hover:bg-editorial-red px-3 py-1.5 transition-colors inline-block">
+                            <span>DOWNLOAD</span>
+                        </a>
+
+                        <button hx-delete="/ui/buckets/{{ bucket_name }}/files/{{ obj.key }}" 
+                                hx-target="#file-list" 
+                                hx-swap="outerHTML" 
+                                hx-confirm="Are you sure you want to delete file {{ obj.key | truncate_filename }} from Telegram?"
+                                class="border border-ink bg-paper hover:bg-editorial-red hover:text-paper text-editorial-red px-3 py-1.5 transition-colors">
+                            <span>DELETE</span>
+                        </button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="px-6 py-16 text-center text-neutral-500 font-mono">
+                        <div class="space-y-2 max-w-sm mx-auto">
+                            <div class="text-xl font-serif font-black text-ink uppercase">THIS BUCKET IS EMPTY</div>
+                            <p class="text-xs">Upload your first file using the button above or call via S3 REST API.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

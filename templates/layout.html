@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MengDrive &mdash; The Daily S3 Telegram Dispatch{% endblock %}</title>
+
+    <!-- Google Fonts: Playfair Display, Lora, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN with Newsprint Custom Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#F9F9F7',
+                        ink: '#111111',
+                        'editorial-red': '#CC0000',
+                        divider: '#E5E5E0',
+                        neutral: {
+                            100: '#F5F5F5',
+                            200: '#E5E5E5',
+                            400: '#A3A3A3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        body: ['Lora', 'Georgia', 'serif'],
+                        sans: ['Inter', '"Helvetica Neue"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'Courier New', 'monospace'],
+                    },
+                    boxShadow: {
+                        'hard': '4px 4px 0px 0px #111111',
+                        'hard-lg': '8px 8px 0px 0px #111111',
+                        'hard-red': '4px 4px 0px 0px #CC0000',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- HTMX CDN -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Force 0px border radius across all elements */
+        *,
+        *::before,
+        *::after {
+            border-radius: 0px !important;
+        }
+
+        /* Dot Grid Background Pattern */
+        body {
+            background-color: #F9F9F7;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23111111' fill-opacity='0.04' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        /* Fine Line Texture Overlay for Sections */
+        .newsprint-texture {
+            position: relative;
+        }
+
+        .newsprint-texture::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(0deg, transparent 98%, rgba(17, 17, 17, 0.03) 100%),
+                linear-gradient(90deg, transparent 98%, rgba(17, 17, 17, 0.03) 100%);
+            background-size: 4px 4px;
+            pointer-events: none;
+        }
+
+        /* Custom Sharp Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F9F9F7;
+            border-left: 1px solid #111111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #111111;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CC0000;
+        }
+
+        .nav-active {
+            background-color: #111111 !important;
+            color: #F9F9F7 !important;
+        }
+
+        .drop-cap::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            float: left;
+            margin-right: 0.75rem;
+            margin-top: 0.2rem;
+            color: #111111;
+        }
+    </style>
+</head>
+
+<body class="bg-paper text-ink font-body min-h-screen flex flex-col antialiased selection:bg-ink selection:text-paper">
+
+    {% block layout_body %}
+    <!-- Top Editorial Masthead Bar -->
+    <div class="bg-ink text-paper text-[11px] font-mono tracking-widest uppercase py-1.5 px-4 border-b border-ink">
+        <div
+            class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
+            <div class="flex items-center space-x-3">
+                <span class="text-editorial-red font-bold">&bull; EST. 2026</span>
+                <span>VOL. I &nbsp;|&nbsp; NO. 0905</span>
+                <span class="hidden md:inline">&nbsp;|&nbsp; NEW YORK &amp; TELEGRAM CLOUD DISPATCH</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-neutral-400">STATUS: <strong class="text-white">ONLINE</strong></span>
+                <span class="text-editorial-red font-bold">MTPROTO ENGINE ACTIVE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newspaper Header Header -->
+    <header class="border-b-4 border-ink bg-paper sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <!-- Newspaper Title / Logo -->
+                <a href="/" class="group block text-left">
+                    <div class="text-[10px] font-mono font-extrabold tracking-[0.25em] text-neutral-500 uppercase">THE
+                        DAILY ZERO-KNOWLEDGE JOURNAL</div>
+                    <h1
+                        class="font-serif font-black text-4xl sm:text-6xl text-ink tracking-tight leading-none group-hover:text-editorial-red transition-colors duration-200">
+                        MENGDRIVE DISPATCH
+                    </h1>
+                </a>
+
+                <!-- Nav Bar Links -->
+                <div class="flex items-center justify-between md:justify-end gap-3 pt-2 md:pt-0">
+                    <nav
+                        class="flex items-center border border-ink bg-paper divide-x divide-ink text-xs font-sans font-bold uppercase tracking-wider">
+                        <a href="/" id="nav-link-home"
+                            class="px-4 py-2.5 hover:bg-ink hover:text-paper transition-all duration-200">Home</a>
+                        <a href="/ui" id="nav-link-dashboard"
+                            class="px-4 py-2.5 hover:bg-ink hover:text-paper transition-all duration-200">Dashboard</a>
+                        <a href="/ui/docs" id="nav-link-docs"
+                            class="px-4 py-2.5 hover:bg-ink hover:text-paper transition-all duration-200">API Docs</a>
+                    </nav>
+
+                    <a href="/logout"
+                        class="border border-ink bg-editorial-red text-paper hover:bg-ink px-4 py-2.5 text-xs font-sans font-bold tracking-wider uppercase transition-all duration-200 flex items-center space-x-1">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5 stroke-2"></i>
+                        <span class="hidden sm:inline">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Double Rule Under Nav -->
+        <div class="border-t border-ink py-0.5"></div>
+    </header>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-3 pointer-events-none"></div>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 newsprint-texture">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Editorial Footer -->
+    <footer class="mt-auto border-t-4 border-ink bg-paper py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-ink">
+                <!-- Col 1: Brand & Edition Info -->
+                <div class="md:col-span-6 space-y-4">
+                    <h3 class="font-serif font-black text-2xl text-ink">MENGDRIVE S3 TELEGRAM DISPATCH</h3>
+                    <p class="text-sm text-neutral-600 font-body leading-relaxed max-w-lg">
+                        All the files that are fit to print and store. Powered by Telegram MTProto User Client
+                        architecture and AES-256 GCM Zero-Knowledge Encryption.
+                    </p>
+                    <div class="text-xs font-mono text-neutral-500 uppercase tracking-widest">
+                        EDITION: VOL 1.0 &nbsp;|&nbsp; PRINTED IN NYC &amp; TG CLOUD
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="md:col-span-3 space-y-3 font-sans">
+                    <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-ink border-b border-ink pb-1">
+                        SECTION NAVIGATION</h4>
+                    <ul class="space-y-2 text-xs font-bold uppercase tracking-wider">
+                        <li><a href="/"
+                                class="hover:text-editorial-red hover:underline underline-offset-4 decoration-editorial-red">Main Home</a></li>
+                        <li><a href="/ui"
+                                class="hover:text-editorial-red hover:underline underline-offset-4 decoration-editorial-red">Storage Dashboard</a></li>
+                        <li><a href="/ui/docs"
+                                class="hover:text-editorial-red hover:underline underline-offset-4 decoration-editorial-red">S3 API Documentation</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Security Spec -->
+                <div class="md:col-span-3 space-y-3 font-sans">
+                    <h4 class="text-xs font-mono font-bold uppercase tracking-widest text-ink border-b border-ink pb-1">
+                        SECURITY SPECIFICATIONS</h4>
+                    <div class="text-xs font-mono text-neutral-700 space-y-1">
+                        <div>ENCRYPTION: <strong class="text-ink">AES-256 GCM</strong></div>
+                        <div>CHUNKING: <strong class="text-ink">19MB MTPROTO</strong></div>
+                        <div>STORAGE HOME: <strong class="text-ink">SAVED MESSAGES</strong></div>
+                        <div>ACCOUNT ID: <strong class="text-ink">082114293950</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-500 uppercase tracking-widest text-center sm:text-left">
+                <p>&copy; 2026 MENGDRIVE S3 ENGINE. ALL RIGHTS RESERVED.</p>
+                <div class="py-2 text-center font-serif text-lg text-neutral-400 tracking-[0.5em]">
+                    &#x2727; &#x2727; &#x2727;
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <!-- Newsprint Media Player Modal -->
+    <div id="video-modal" class="hidden fixed inset-0 z-50 bg-ink/80 flex items-center justify-center p-4">
+        <div class="bg-paper border-4 border-ink max-w-4xl w-full p-6 space-y-4 shadow-hard-lg relative">
+            <div class="flex justify-between items-center border-b-2 border-ink pb-3">
+                <div class="flex items-center space-x-3">
+                    <span
+                        class="bg-editorial-red text-paper px-2 py-1 text-xs font-mono font-bold uppercase tracking-wider">MEDIA
+                        DISPATCH</span>
+                    <h3 id="video-modal-title" class="font-serif font-bold text-ink text-xl truncate max-w-md">Stream
+                        Media</h3>
+                </div>
+                <button onclick="closeVideoModal()"
+                    class="border border-ink bg-paper hover:bg-ink hover:text-paper p-1.5 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5 stroke-2"></i>
+                </button>
+            </div>
+            <div class="bg-ink p-1 border-2 border-ink aspect-video flex items-center justify-center relative">
+                <video id="video-player" controls autoplay class="w-full h-full max-h-[70vh]">
+                    <source id="video-source" src="" type="video/mp4">
+                    Your browser does not support HTML5 video streaming.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        document.body.addEventListener('htmx:afterSwap', function () {
+            lucide.createIcons();
+        });
+
+        // Highlight Active Nav Item
+        (function highlightActiveNav() {
+            const path = window.location.pathname;
+            const homeLink = document.getElementById('nav-link-home');
+            const dashLink = document.getElementById('nav-link-dashboard');
+            const docsLink = document.getElementById('nav-link-docs');
+
+            if (path === '/') {
+                if (homeLink) homeLink.classList.add('nav-active');
+            } else if (path.startsWith('/ui/docs')) {
+                if (docsLink) docsLink.classList.add('nav-active');
+            } else if (path.startsWith('/ui')) {
+                if (dashLink) dashLink.classList.add('nav-active');
+            }
+        })();
+
+        function playVideo(streamUrl, title) {
+            const modal = document.getElementById('video-modal');
+            const player = document.getElementById('video-player');
+            const source = document.getElementById('video-source');
+            const titleEl = document.getElementById('video-modal-title');
+
+            if (titleEl) titleEl.innerText = title;
+            if (source) source.src = streamUrl;
+            if (player) {
+                player.load();
+                player.play().catch(e => console.log('Autoplay deferred:', e));
+            }
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            const player = document.getElementById('video-player');
+            if (player) {
+                player.pause();
+                player.src = "";
+            }
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function showToast(msg, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 border-2 border-ink font-mono text-xs font-bold uppercase tracking-wider shadow-hard ${type === 'success'
+                    ? 'bg-paper text-ink'
+                    : 'bg-editorial-red text-paper'
+                }`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'success' ? 'check' : 'alert-triangle'}" class="w-4 h-4 stroke-2"></i>
+                <span>${msg}</span>
+            `;
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        function copyToClipboard(text, label = 'Text') {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`${label} COPIED TO CLIPBOARD!`);
+            }).catch(err => {
+                showToast('FAILED TO COPY TEXT', 'error');
+            });
+        }
+    </script>
+</body>
+
+</html>

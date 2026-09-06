@@ -1,0 +1,50 @@
+<div id="bucket-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for bucket in buckets %}
+    <div class="border-2 border-ink bg-paper p-6 space-y-6 hover:shadow-hard hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between group">
+        <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-ink pb-2">
+                <span class="bg-ink text-paper text-[10px] font-mono font-bold px-2 py-0.5 uppercase tracking-widest">
+                    S3 BUCKET
+                </span>
+                <span class="text-[11px] font-mono text-neutral-500 font-bold uppercase">
+                    MTPROTO FOLDER
+                </span>
+            </div>
+
+            <div class="space-y-1">
+                <h4 class="font-serif font-black text-2xl text-ink truncate group-hover:text-editorial-red transition-colors" title="{{ bucket.name }}">
+                    {{ bucket.name }}
+                </h4>
+                <p class="text-xs text-neutral-500 font-mono">CREATED: {{ bucket.created_at }}</p>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-ink flex items-center justify-between gap-3 font-sans text-xs font-bold uppercase tracking-wider">
+            <a href="/ui/buckets/{{ bucket.name }}" 
+               class="flex-1 bg-ink text-paper hover:bg-editorial-red px-4 py-3 border border-ink text-center transition-colors duration-200">
+                MANAGE FILES &rarr;
+            </a>
+
+            <button hx-delete="/ui/buckets/{{ bucket.name }}" 
+                    hx-target="#bucket-list" 
+                    hx-swap="outerHTML" 
+                    hx-confirm="Are you sure you want to delete bucket {{ bucket.name }}?"
+                    class="border border-ink bg-paper hover:bg-editorial-red hover:text-paper px-3 py-3 transition-colors duration-200">
+                <i data-lucide="trash-2" class="w-4 h-4 stroke-2"></i>
+            </button>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-span-full border-2 border-ink p-12 text-center bg-paper space-y-4 shadow-hard">
+        <div class="w-12 h-12 border border-ink bg-neutral-100 mx-auto flex items-center justify-center text-ink font-mono font-bold">
+            0
+        </div>
+        <h4 class="font-serif font-black text-xl text-ink uppercase">NO REGISTERED S3 BUCKETS</h4>
+        <p class="text-xs font-mono text-neutral-600 max-w-md mx-auto">
+            Use the form above to create your first bucket. Bucket names will be automatically formatted to lowercase.
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+

@@ -1,0 +1,162 @@
+{% extends "layout.html" %}
+
+{% block title %}MengDrive &mdash; All The Files That Are Fit To Store{% endblock %}
+
+{% block content %}
+<div class="space-y-12 sm:space-y-16">
+    <!-- Running News Ticker Marquee -->
+    <div class="bg-ink text-paper border border-ink py-2 px-4 font-mono text-xs overflow-hidden shadow-hard flex items-center space-x-4">
+        <span class="bg-editorial-red text-paper font-bold px-2 py-0.5 uppercase tracking-widest text-[10px] flex-shrink-0">TELEGRAM CRAWL</span>
+        <div class="whitespace-nowrap overflow-x-auto no-scrollbar font-bold tracking-wider space-x-8 text-neutral-300">
+            <span>&bull; MTPROTO USER CLIENT: ONLINE</span>
+            <span>&bull; AES-256 GCM ZERO-KNOWLEDGE: ACTIVE</span>
+            <span>&bull; DEFAULT BUCKET: SAVED MESSAGES ('ME')</span>
+            <span>&bull; FOLDERS: AUTO-CREATED TELEGRAM CHANNELS</span>
+            <span>&bull; CHUNKING: 19MB MTPROTO DYNAMIC STREAMS</span>
+        </div>
+    </div>
+
+    <!-- Hero Section: Headline & Lead Editorial -->
+    <section class="border-b-4 border-ink pb-12 space-y-8 text-center sm:text-left">
+        <div class="flex items-center space-x-2 text-xs font-mono font-bold text-neutral-500 uppercase tracking-widest">
+            <span class="text-editorial-red font-extrabold">&bull; SPECIAL DISPATCH</span>
+            <span>SEPTEMBER 05, 2026</span>
+            <span>&bull; EDITED BY MENG LABS</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="font-serif font-black text-5xl sm:text-7xl lg:text-9xl text-ink tracking-tighter leading-[0.9] uppercase">
+            ALL THE FILES THAT ARE FIT TO STORE.
+        </h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-4">
+            <!-- Lead Article (8 Cols) -->
+            <div class="lg:col-span-8 space-y-4">
+                <p class="drop-cap text-lg sm:text-xl text-neutral-800 font-body leading-relaxed text-justify">
+                    MengDrive introduces a seamless cloud storage engine pairing <strong>S3 Protocol Compatibility</strong> with the reliability of the <strong>Telegram MTProto Engine</strong>. All your data is protected using <strong>AES-256 GCM Zero-Knowledge Encryption</strong> and stored directly in your personal Telegram storage with unlimited capacity.
+                </p>
+                
+                <div class="flex flex-wrap items-center gap-4 pt-4">
+                    <a href="/ui" class="bg-ink text-paper hover:bg-white hover:text-ink border-2 border-ink px-8 py-4 font-sans font-extrabold text-sm uppercase tracking-widest transition-all duration-200 hover:shadow-hard flex items-center space-x-2">
+                        <span>Open Storage Dashboard</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 stroke-2"></i>
+                    </a>
+
+                    <a href="/ui/docs" class="border-2 border-ink bg-transparent text-ink hover:bg-ink hover:text-paper px-8 py-4 font-sans font-extrabold text-sm uppercase tracking-widest transition-all duration-200">
+                        <span>S3 API Documentation</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Front Page Infographic Box (4 Cols) -->
+            <div class="lg:col-span-4 border-2 border-ink p-6 bg-paper space-y-4 shadow-hard">
+                <div class="border-b border-ink pb-2 flex items-center justify-between">
+                    <span class="text-xs font-mono font-extrabold uppercase tracking-widest text-ink">FIG 1.1 &mdash; ARCHITECTURE</span>
+                    <span class="text-[10px] font-mono text-editorial-red font-bold">LIVE METRICS</span>
+                </div>
+                
+                <div class="space-y-3 font-mono text-xs">
+                    <div class="flex justify-between border-b border-divider pb-1.5">
+                        <span class="text-neutral-500">PROTOCOL:</span>
+                        <span class="font-bold text-ink">S3 REST API</span>
+                    </div>
+                    <div class="flex justify-between border-b border-divider pb-1.5">
+                        <span class="text-neutral-500">ENGINE:</span>
+                        <span class="font-bold text-ink">USER MTPROTO</span>
+                    </div>
+                    <div class="flex justify-between border-b border-divider pb-1.5">
+                        <span class="text-neutral-500">ENCRYPTION:</span>
+                        <span class="font-bold text-editorial-red">AES-256 GCM</span>
+                    </div>
+                    <div class="flex justify-between border-b border-divider pb-1.5">
+                        <span class="text-neutral-500">HOME PEER:</span>
+                        <span class="font-bold text-ink">SAVED MESSAGES</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-neutral-500">LIMIT:</span>
+                        <span class="font-bold text-ink">UNLIMITED</span>
+                    </div>
+                </div>
+
+                <div class="bg-neutral-200 border border-ink p-3 text-[11px] font-mono text-neutral-600">
+                    * Files are automatically split into 19MB chunks before transmission over the MTProto socket.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3-Column Newspaper Grid Layout -->
+    <section class="space-y-6">
+        <div class="border-b-2 border-ink pb-2 flex items-center justify-between">
+            <h2 class="font-serif font-black text-3xl uppercase text-ink">KEY FEATURES &amp; ENGINE SPECIFICATIONS</h2>
+            <span class="text-xs font-mono uppercase text-neutral-500 hidden sm:inline">SECTION B &bull; TECHNICAL DISPATCH</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-ink">
+            <!-- Column 1 -->
+            <div class="border-r border-b border-ink p-6 space-y-3 bg-paper hover:bg-neutral-100 transition-colors">
+                <div class="text-xs font-mono font-bold text-editorial-red uppercase tracking-widest">ARTICLE I</div>
+                <h3 class="font-serif font-bold text-2xl text-ink">S3 API Protocol Integration</h3>
+                <p class="text-sm font-body text-neutral-700 leading-relaxed text-justify">
+                    100% REST API compatibility with standard S3 CLI tools (`aws-cli`, `rclone`, Cyberduck) and SDKs (`boto3`, `@aws-sdk/client-s3`).
+                </p>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="border-r border-b border-ink p-6 space-y-3 bg-paper hover:bg-neutral-100 transition-colors">
+                <div class="text-xs font-mono font-bold text-editorial-red uppercase tracking-widest">ARTICLE II</div>
+                <h3 class="font-serif font-bold text-2xl text-ink">AES-256 Zero-Knowledge Encryption</h3>
+                <p class="text-sm font-body text-neutral-700 leading-relaxed text-justify">
+                    Every byte is encrypted with your Master Key before leaving the local server. Telegram receives only unreadable ciphertext payload.
+                </p>
+            </div>
+
+            <!-- Column 3 -->
+            <div class="border-r border-b border-ink p-6 space-y-3 bg-paper hover:bg-neutral-100 transition-colors">
+                <div class="text-xs font-mono font-bold text-editorial-red uppercase tracking-widest">ARTICLE III</div>
+                <h3 class="font-serif font-bold text-2xl text-ink">Instant Video Streaming (HTTP 206)</h3>
+                <p class="text-sm font-body text-neutral-700 leading-relaxed text-justify">
+                    Full support for Partial Range Requests (HTTP 206) to stream large video/audio files directly without downloading the whole file.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive cURL Quickstart Code Box -->
+    <section class="border-4 border-ink p-6 sm:p-8 bg-paper shadow-hard-lg space-y-6">
+        <div class="flex items-center justify-between flex-wrap gap-4 border-b-2 border-ink pb-4">
+            <div>
+                <span class="text-xs font-mono font-bold text-editorial-red uppercase tracking-widest">&bull; DISPATCH TERMINAL</span>
+                <h3 class="font-serif font-black text-2xl text-ink uppercase">QUICKSTART INSTANT UPLOAD VIA cURL</h3>
+            </div>
+            <button onclick="copyToClipboard('curl -X PUT http://localhost:3060/my-bucket/sample.txt --data-binary @sample.txt', 'cURL Command')" 
+                    class="border border-ink bg-ink text-paper hover:bg-white hover:text-ink px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200">
+                COPY COMMAND
+            </button>
+        </div>
+
+        <div class="bg-ink text-paper p-5 font-mono text-xs overflow-x-auto shadow-inner border border-ink">
+            <code class="text-neutral-200">
+                <span class="text-editorial-red font-bold">curl</span> -X PUT http://localhost:3060/my-bucket/sample.txt \<br>
+                &nbsp;&nbsp;-H <span class="text-white">"Content-Type: text/plain"</span> \<br>
+                &nbsp;&nbsp;--data-binary <span class="text-white">"@sample.txt"</span>
+            </code>
+        </div>
+    </section>
+
+    <!-- Bottom Editorial CTA -->
+    <section class="border-2 border-ink bg-ink text-paper p-8 sm:p-12 text-center space-y-6 shadow-hard-lg">
+        <h2 class="font-serif font-black text-3xl sm:text-5xl uppercase tracking-tight">READY TO START YOUR S3 STORAGE?</h2>
+        <p class="text-sm font-body text-neutral-300 max-w-xl mx-auto">
+            Access the bucket management dashboard or integrate your applications with the S3 REST API in seconds.
+        </p>
+        <div>
+            <a href="/ui" class="inline-block bg-paper text-ink hover:bg-editorial-red hover:text-paper border-2 border-paper px-10 py-4 font-sans font-extrabold text-sm uppercase tracking-widest transition-all duration-200">
+                OPEN STORAGE DASHBOARD &rarr;
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+

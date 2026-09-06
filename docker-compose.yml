@@ -1,0 +1,25 @@
+services:
+  mengdrive:
+    image: simenglabs/teledrive:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mengdrive
+    restart: unless-stopped
+    ports:
+      - "3060:3060"
+    environment:
+      TELEGRAM_API_ID: ${TELEGRAM_API_ID}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH}
+      TURSO_DATABASE_URL: ${TURSO_DATABASE_URL:-file:/data/local.db}
+      TURSO_AUTH_TOKEN: ${TURSO_AUTH_TOKEN:-}
+      MASTER_ENCRYPTION_KEY: ${MASTER_ENCRYPTION_KEY}
+      SERVER_PORT: 3060
+      RUST_LOG: ${RUST_LOG:-info}
+    volumes:
+      - mengdrive_data:/data
+    # Session & local DB persist across restarts
+    # turso auth token not needed for local sqlite file
+
+volumes:
+  mengdrive_data:
