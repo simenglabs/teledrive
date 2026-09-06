@@ -90,6 +90,41 @@ openssl rand -hex 32
 
 ---
 
+## 🐳 Docker & Release
+
+The Docker image ships **only the prebuilt release binary + templates** — no Rust toolchain, no source code, no compilation inside the image.
+
+```bash
+# One-time: activate the pre-push build gate (check → test → release build → docker build)
+./scripts/setup-hooks.sh
+
+# Local release build (this artifact is what goes into the image)
+make build
+
+# Build image from the prebuilt binary
+make docker-build          # -> simenglabs/teledrive:latest
+
+# Push to Docker Hub (docker login required)
+make docker-push
+
+# Or all at once
+make release
+```
+
+`git push` automatically runs the full pipeline via the pre-push hook:
+`cargo check` → `cargo test` → `cargo build --release` → `docker build`.
+Skip with `git push --no-verify`.
+
+### Run with Docker Compose
+
+```bash
+cp .env.example .env   # fill in TELEGRAM_API_ID / TELEGRAM_API_HASH
+docker compose up -d
+# Dashboard: http://localhost:3060/ui
+```
+
+---
+
 ## 🚀 Quick Start Guide
 
 ### 1. Configuration Setup
