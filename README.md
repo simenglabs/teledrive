@@ -123,6 +123,8 @@ docker compose up -d
 # Dashboard: http://localhost:3060/ui
 ```
 
+📚 **Deploying to a VPS?** See the full guide: [docs/deploy_vps.md](docs/deploy_vps.md) — Docker install, Telegram login, HTTPS/domain (Caddy/Nginx), update flow, and troubleshooting.
+
 ---
 
 ## 🚀 Quick Start Guide
